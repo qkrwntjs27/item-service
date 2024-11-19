@@ -63,6 +63,33 @@ public class BasicItemController {
         return "redirect:/basic/items/{itemId}";
     }
 
+    @PostMapping("{itemId}/delete")
+    public String deleteItem(@PathVariable("itemId") Long itemId) {
+        itemRepository.delete(itemId);
+        return "redirect:/basic/items";
+    }
+
+    @GetMapping("/search")
+    public String searchItem(@RequestParam("query") String query, Model model) {
+        // ID로 검색
+        try {
+            Long id = Long.valueOf(query);
+            Item item = itemRepository.findById(id);
+            model.addAttribute("item", item);
+            return "basic/select";
+        } catch (NumberFormatException e) {
+            // 상품명으로 검색
+            List<Item> items = itemRepository.findAll();
+            Item item = items.stream()
+                    .filter(i -> i.getItemName().equalsIgnoreCase(query))
+                    .findFirst()
+                    .orElse(null);
+            model.addAttribute("item", item);
+            return "basic/select";
+        }
+    }
+
+
     //testcase
     @PostConstruct
     public void init() {

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>상품 조회 결과</h2>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>수량</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${item != null}">
+                <td th:text="${item.id}">ID</td>
+                <td th:text="${item.itemName}">상품명</td>
+                <td th:text="${item.price}">10000</td>
+                <td th:text="${item.quantity}">10</td>
+            </tr>
+            <tr th:if="${item == null}">
+                <td colspan="4" class="text-center">상품을 찾을 수 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-secondary" th:onclick="|location.href='@{/basic/items}'|">목록으로</button>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
